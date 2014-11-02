@@ -1,0 +1,82 @@
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'maven-publish'
+apply plugin: 'distribution'
+
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+group = 'com.learnerd'
+version = "${-> majorVersion}.${-> minorVersion}.${-> patchVersion}"
+
+ext {
+    majorVersion = System.getProperty("majorVersion", "UNDEFINED")
+    minorVersion = System.getProperty("minorVersion", "UNDEFINED")
+    patchVersion = System.getProperty("patchVersion", "UNDEFINED")
+    springVersion = '4.1.1.RELEASE'
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+test {
+    jvmArgs '-XX:MaxPermSize=1024m'
+}
+
+dependencies {
+    compile 'org.eclipse.jetty:jetty-server:9.2.3.v20140905'
+    compile 'org.eclipse.jetty:jetty-servlet:9.2.3.v20140905'
+
+    compile 'com.fasterxml.jackson.core:jackson-core:2.4.3'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.4.3'
+
+
+    compile 'ch.qos.logback:logback-classic:1.1.2'
+    compile 'ch.qos.logback:logback-core:1.1.2'
+    compile 'com.netflix.rxjava:rxjava-groovy:0.20.6'
+    compile 'org.codehaus.groovy:groovy-all:2.3.7'
+    compile 'org.yaml:snakeyaml:1.14'
+
+    compile 'com.google.guava:guava:18.0'
+    compile 'com.google.code.findbugs:annotations:3.0.0'
+    compile "org.springframework:spring-core:$springVersion"
+    compile "org.springframework:spring-beans:$springVersion"
+    compile "org.springframework:spring-context-support:$springVersion"
+    compile "org.springframework:spring-context:$springVersion"
+    compile "org.springframework:spring-webmvc:$springVersion"
+    compile 'org.springframework.data:spring-data-redis:1.4.0.RELEASE'
+    compile 'org.springframework.data:spring-data-commons:1.9.0.RELEASE'
+    compile 'org.springframework.hateoas:spring-hateoas:0.16.0.RELEASE'
+
+
+    compile 'org.springframework.security:spring-security-web:3.2.5.RELEASE'
+
+
+    runtime 'org.postgresql:postgresql:9.3-1102-jdbc41'
+    runtime 'org.slf4j:slf4j-api:1.7.7'
+
+    testCompile "org.springframework:spring-test:$springVersion"
+    testCompile 'com.google.guava:guava-testlib:18.0'
+    testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
+    testCompile 'org.spockframework:spock-spring:0.7-groovy-2.0'
+    testCompile 'org.hamcrest:hamcrest-all:1.3'
+}
+
+jar {
+    manifest {
+        attributes(
+                "Manifest-Version": "1.0",
+                "Implementation-Title": project.name,
+                "Implementation-Version": project.version,
+                "Implementation-Vendor": project.group,
+        )
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.1'
+}

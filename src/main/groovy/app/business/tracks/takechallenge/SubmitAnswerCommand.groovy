@@ -1,0 +1,70 @@
+package app.business.tracks.takechallenge
+
+import app.business.tracks.TrackRepository
+import app.infrastructure.Command
+import app.infrastructure.CommandHandler
+import groovy.transform.Immutable
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
+
+import static rx.Observable.just
+
+@Immutable
+class SubmitAnswerCommand implements Command<rx.Observable<Map>> {
+
+    String challengeCode
+    int deckNo
+    int questionNo
+    int answerNo
+
+    @Component
+    static class Handler implements CommandHandler<rx.Observable<Map>, SubmitAnswerCommand> {
+
+        @Autowired
+        TrackRepository trackRepository
+
+        @Override
+        rx.Observable<Map> handle(SubmitAnswerCommand command) {
+
+            def track = trackRepository.findByCode(command.challengeCode)
+            def deck = track.decks[command.deckNo]
+
+            boolean hasMoreDecks = command.deckNo < track.decks.size() - 1
+            boolean hasMoreQuestionsInDeck = command.questionNo < deck.questions.size() - 1
+
+            if (hasMoreQuestionsInDeck) {
+                def nextQuestionNo = command.questionNo + 1
+                def nextQuestion = deck.questions[nextQuestionNo]
+                return just([
+                        "deck"                  : command.deckNo,
+                        "deck.title"            : deck.title,
+                        "deck.level"            : deck.level,
+                        "question"              : nextQuestionNo,
+                        "question.title"        : nextQuestion.title,
+                        "question.answerOptions": nextQuestion.answerOptions.collect { ["text": it.text] }
+                ])
+            }
+
+            if (hasMoreDecks) {
+                def nextDeckNo = command.deckNo + 1
+                def nextDeck = track.decks[nextDeckNo]
+                def nextQuestionNo = 0
+                def nextQuestion = nextDeck.questions[nextQuestionNo]
+                return just([
+                        "deck"                  : nextDeckNo,
+                        "deck.title"            : nextDeck.title,
+                        "deck.level"            : nextDeck.level,
+                        "deck.done"             : true,
+                        "question"              : 0,
+                        "question.title"        : nextQuestion.title,
+                        "question.answerOptions": nextQuestion.answerOptions.collect { ["text": it.text] }
+                ])
+            }
+
+            return just([
+                    "challenge.done": true
+            ])
+        }
+    }
+
+}

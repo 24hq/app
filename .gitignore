@@ -1,0 +1,23 @@
+*.class
+
+# Package Files #
+*.war
+*.ear
+
+target
+
+# IDE
+.idea/
+*.iml
+.project
+.classpath
+.settings
+
+*.out.xml
+
+.DS_Store
+
+# gradle
+build
+.gradle
+target
