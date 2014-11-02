@@ -62,7 +62,7 @@ class SubmitAnswerCommand implements Command<Map> {
             }
 
             return just([
-                    "challenge.done": true
+                    "track.done": true
             ])
         }
     }
