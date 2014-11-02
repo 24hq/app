@@ -23,7 +23,7 @@ class DefaultCommandBus implements CommandBus {
     }
 
     @Override
-    public <R, C extends Command<R>> R execute(C command) {
+    public <R, C extends Command<R>> rx.Observable<R> execute(C command) {
         checkNotNull(command, "Command cannot be null", '')
         CommandHandler<R, C> handler = getHandlerFor(command)
         handler.handle(command)

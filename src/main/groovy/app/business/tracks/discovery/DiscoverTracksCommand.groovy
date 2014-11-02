@@ -1,6 +1,5 @@
 package app.business.tracks.discovery
 
-import app.business.tracks.Track
 import app.business.tracks.TrackRepository
 import app.infrastructure.Command
 import app.infrastructure.CommandHandler
@@ -9,14 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Component
 
+import static rx.Observable.just
+
 @Immutable
-class DiscoverTracksCommand implements Command<rx.Observable<Track>> {
+class DiscoverTracksCommand implements Command<Collection> {
 
     int page
     int size
 
     @Component
-    static class Handler implements CommandHandler<rx.Observable<Track>, DiscoverTracksCommand> {
+    static class Handler implements CommandHandler<Collection, DiscoverTracksCommand> {
 
         @Autowired
         TrackRepository trackRepository
@@ -39,7 +40,7 @@ class DiscoverTracksCommand implements Command<rx.Observable<Track>> {
 
 
 
-            rx.Observable.just(response)
+            just(response)
         }
     }
 

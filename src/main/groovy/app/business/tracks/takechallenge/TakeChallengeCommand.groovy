@@ -10,12 +10,12 @@ import org.springframework.stereotype.Component
 import static rx.Observable.just
 
 @Immutable
-class TakeChallengeCommand implements Command<rx.Observable<Map>> {
+class TakeChallengeCommand implements Command<Map> {
 
     String challengeCode
 
     @Component
-    static class Handler implements CommandHandler<rx.Observable<Map>, TakeChallengeCommand> {
+    static class Handler implements CommandHandler<Map, TakeChallengeCommand> {
 
         @Autowired
         TrackRepository trackRepository
