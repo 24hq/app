@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Component
 
+import static rx.Observable.error
 import static rx.Observable.just
 
 @Immutable
@@ -28,7 +29,7 @@ class DiscoverTracksCommand implements Command<Collection> {
             def tracks = trackRepository.list(pageRequest)
 
             if (!tracks.hasContent()) {
-                return rx.Observable.error(new TrackDiscoveryException())
+                return error(new TrackDiscoveryException())
             }
 
             def response = tracks.content.stream().map({ track ->
