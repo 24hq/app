@@ -36,14 +36,14 @@ class SubmitAnswerCommand implements Command<Map> {
                 def nextQuestionNo = command.questionNo + 1
                 def nextQuestion = deck.questions[nextQuestionNo]
                 return just([
-                        "track.size"            : track.size(),
-                        "deck"                  : command.deckNo,
-                        "deck.title"            : deck.title,
-                        "deck.level"            : deck.level,
-                        "deck.size"             : deck.size(),
-                        "question"              : nextQuestionNo,
-                        "question.title"        : nextQuestion.title,
-                        "question.answerOptions": nextQuestion.answerOptions.collect { ["text": it.text] }
+                        "track.decksUntilNextLevel": track.decksUntilNextLevel(command.deckNo),
+                        "deck"                     : command.deckNo,
+                        "deck.title"               : deck.title,
+                        "deck.level"               : deck.level,
+                        "deck.size"                : deck.size(),
+                        "question"                 : nextQuestionNo,
+                        "question.title"           : nextQuestion.title,
+                        "question.answerOptions"   : nextQuestion.answerOptions.collect { ["text": it.text] }
                 ])
             }
 
@@ -53,15 +53,15 @@ class SubmitAnswerCommand implements Command<Map> {
                 def nextQuestionNo = 0
                 def nextQuestion = nextDeck.questions[nextQuestionNo]
                 return just([
-                        "track.size"            : track.size(),
-                        "deck"                  : nextDeckNo,
-                        "deck.title"            : nextDeck.title,
-                        "deck.level"            : nextDeck.level,
-                        "deck.size"             : nextDeck.size(),
-                        "deck.done"             : true,
-                        "question"              : 0,
-                        "question.title"        : nextQuestion.title,
-                        "question.answerOptions": nextQuestion.answerOptions.collect { ["text": it.text] }
+                        "track.decksUntilNextLevel": track.decksUntilNextLevel(nextDeckNo),
+                        "deck"                     : nextDeckNo,
+                        "deck.title"               : nextDeck.title,
+                        "deck.level"               : nextDeck.level,
+                        "deck.size"                : nextDeck.size(),
+                        "deck.done"                : true,
+                        "question"                 : 0,
+                        "question.title"           : nextQuestion.title,
+                        "question.answerOptions"   : nextQuestion.answerOptions.collect { ["text": it.text] }
                 ])
             }
 
