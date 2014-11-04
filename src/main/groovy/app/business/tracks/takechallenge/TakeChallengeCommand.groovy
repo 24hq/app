@@ -30,6 +30,7 @@ class TakeChallengeCommand implements Command<Map> {
                     "deck"                  : 0,
                     "deck.title"            : deck.title,
                     "deck.level"            : deck.level,
+                    "deck.size"             : deck.size(),
                     "question"              : 0,
                     "question.title"        : question.title,
                     "question.answerOptions": question.answerOptions.collect { ["text": it.text] }

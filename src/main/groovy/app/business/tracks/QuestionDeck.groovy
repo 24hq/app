@@ -7,4 +7,8 @@ class QuestionDeck {
 
     Collection<Question> questions
 
+    int size() {
+        questions.size()
+    }
+
 }
