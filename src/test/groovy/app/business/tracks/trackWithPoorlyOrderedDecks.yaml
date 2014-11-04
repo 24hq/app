@@ -1,0 +1,23 @@
+code: BROKEN
+title: Are you a Clean Coder?
+description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+decks:
+  - title: Coding
+    level: 2
+    questions:
+      - title: What is Clean Code?
+        answerOptions:
+          - text: Bullshit
+            correct: false
+          - text: Great stuff
+            correct: true
+  - title: Molding
+    level: 1
+    questions:
+      - title: What is Clean Code?
+        answerOptions:
+          - text: Bullshit
+            correct: false
+          - text: Great stuff
+            correct: true

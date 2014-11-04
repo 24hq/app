@@ -8,4 +8,8 @@ class Track {
 
     Collection<QuestionDeck> decks
 
+    int size() {
+        decks.size()
+    }
+
 }

@@ -36,6 +36,7 @@ class SubmitAnswerCommand implements Command<Map> {
                 def nextQuestionNo = command.questionNo + 1
                 def nextQuestion = deck.questions[nextQuestionNo]
                 return just([
+                        "track.size"            : track.size(),
                         "deck"                  : command.deckNo,
                         "deck.title"            : deck.title,
                         "deck.level"            : deck.level,
@@ -52,6 +53,7 @@ class SubmitAnswerCommand implements Command<Map> {
                 def nextQuestionNo = 0
                 def nextQuestion = nextDeck.questions[nextQuestionNo]
                 return just([
+                        "track.size"            : track.size(),
                         "deck"                  : nextDeckNo,
                         "deck.title"            : nextDeck.title,
                         "deck.level"            : nextDeck.level,
