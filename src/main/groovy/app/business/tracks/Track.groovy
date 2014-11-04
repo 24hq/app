@@ -19,7 +19,7 @@ class Track {
         def lastDeckWithAtTheSameLevel = decks.findLastIndexOf { it.level == level }
 
 
-        (lastDeckWithAtTheSameLevel - currentDeckNo) + 1
+        (lastDeckWithAtTheSameLevel - currentDeckNo)
     }
 
     int size() {

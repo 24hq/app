@@ -60,6 +60,7 @@ dependencies {
     runtime 'org.slf4j:slf4j-api:1.7.7'
 
     testCompile "org.springframework:spring-test:$springVersion"
+    testCompile 'com.jayway.jsonpath:json-path:0.9.1'
     testCompile 'com.google.guava:guava-testlib:18.0'
     testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
     testCompile 'org.spockframework:spock-spring:0.7-groovy-2.0'

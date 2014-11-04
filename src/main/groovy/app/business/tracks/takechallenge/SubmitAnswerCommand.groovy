@@ -12,7 +12,7 @@ import static rx.Observable.just
 @Immutable
 class SubmitAnswerCommand implements Command<Map> {
 
-    String challengeCode
+    String trackCode
     int deckNo
     int questionNo
     int answerNo
@@ -26,17 +26,18 @@ class SubmitAnswerCommand implements Command<Map> {
         @Override
         rx.Observable<Map> handle(SubmitAnswerCommand command) {
 
-            def track = trackRepository.findByCode(command.challengeCode)
+            def track = trackRepository.findByCode(command.trackCode)
             def deck = track.decks[command.deckNo]
 
-            boolean hasMoreDecks = command.deckNo < track.decks.size() - 1
-            boolean hasMoreQuestionsInDeck = command.questionNo < deck.questions.size() - 1
+            def hasMoreDecks = command.deckNo < track.size() - 1
+            def hasMoreQuestionsInDeck = command.questionNo < deck.size() - 1
+            def decksUntilNextLevel = track.decksUntilNextLevel(command.deckNo)
 
             if (hasMoreQuestionsInDeck) {
                 def nextQuestionNo = command.questionNo + 1
                 def nextQuestion = deck.questions[nextQuestionNo]
                 return just([
-                        "track.decksUntilNextLevel": track.decksUntilNextLevel(command.deckNo),
+                        "track.decksUntilNextLevel": decksUntilNextLevel,
                         "deck"                     : command.deckNo,
                         "deck.title"               : deck.title,
                         "deck.level"               : deck.level,
@@ -47,27 +48,26 @@ class SubmitAnswerCommand implements Command<Map> {
                 ])
             }
 
-            if (hasMoreDecks) {
-                def nextDeckNo = command.deckNo + 1
-                def nextDeck = track.decks[nextDeckNo]
-                def nextQuestionNo = 0
-                def nextQuestion = nextDeck.questions[nextQuestionNo]
+            if (decksUntilNextLevel > 0) {
                 return just([
-                        "track.decksUntilNextLevel": track.decksUntilNextLevel(nextDeckNo),
-                        "deck"                     : nextDeckNo,
-                        "deck.title"               : nextDeck.title,
-                        "deck.level"               : nextDeck.level,
-                        "deck.size"                : nextDeck.size(),
-                        "deck.done"                : true,
-                        "question"                 : 0,
-                        "question.title"           : nextQuestion.title,
-                        "question.answerOptions"   : nextQuestion.answerOptions.collect { ["text": it.text] }
+                        "deck"     : command.deckNo + 1,
+                        "deck.next": true
                 ])
             }
 
-            return just([
-                    "track.done": true
+            if (decksUntilNextLevel == 0 && hasMoreDecks) {
+                return just([
+                        "deck"      : command.deckNo + 1,
+                        "deck.next": true,
+                        "level.next": true
+                ])
+            }
+
+            // sorry, no more decks.
+            just([
+                    "level.done": true
             ])
+
         }
     }
 

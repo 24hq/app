@@ -13,18 +13,18 @@ class TrackSpec extends Specification {
 
     def track = new Track(decks: decks)
 
-    def "calculates number of decks until next level (inclusive)"() {
+    def "calculates number of decks until next level"() {
         expect:
-        track.decksUntilNextLevel(0) == 3
-        track.decksUntilNextLevel(1) == 2
-        track.decksUntilNextLevel(2) == 1
-        track.decksUntilNextLevel(3) == 2
-        track.decksUntilNextLevel(4) == 1
+        track.decksUntilNextLevel(0) == 2
+        track.decksUntilNextLevel(1) == 1
+        track.decksUntilNextLevel(2) == 0
+        track.decksUntilNextLevel(3) == 1
+        track.decksUntilNextLevel(4) == 0
     }
 
     def "throws IllegalStateException if passed-in deck is out of bounds"() {
         when:
-        track.decksUntilNextLevel(currentDeck) == 1
+        track.decksUntilNextLevel(currentDeck)
 
         then:
         def e = thrown(IllegalArgumentException)

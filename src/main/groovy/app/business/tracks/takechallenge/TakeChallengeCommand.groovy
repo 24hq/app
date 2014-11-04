@@ -12,7 +12,9 @@ import static rx.Observable.just
 @Immutable
 class TakeChallengeCommand implements Command<Map> {
 
-    String challengeCode
+    String trackCode
+
+    int deckNo
 
     @Component
     static class Handler implements CommandHandler<Map, TakeChallengeCommand> {
@@ -22,13 +24,13 @@ class TakeChallengeCommand implements Command<Map> {
 
         @Override
         rx.Observable<Map> handle(TakeChallengeCommand command) {
-            def track = trackRepository.findByCode(command.challengeCode)
-            def deck = track.decks.first()
+            def track = trackRepository.findByCode(command.trackCode)
+            def deck = track.decks[command.deckNo]
             def question = deck.questions.first()
 
             just([
-                    "track.decksUntilNextLevel": track.decksUntilNextLevel(0),
-                    "deck"                     : 0,
+                    "track.decksUntilNextLevel": track.decksUntilNextLevel(command.deckNo),
+                    "deck"                     : command.deckNo,
                     "deck.title"               : deck.title,
                     "deck.level"               : deck.level,
                     "deck.size"                : deck.size(),
