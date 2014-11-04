@@ -14,35 +14,36 @@ import static rx.Observable.just
 @Immutable
 class DiscoverTracksCommand implements Command<Collection> {
 
-    int page
-    int size
+	int page
+	int size
 
-    @Component
-    static class Handler implements CommandHandler<Collection, DiscoverTracksCommand> {
+	@Component
+	static class Handler implements CommandHandler<Collection, DiscoverTracksCommand> {
 
-        @Autowired
-        TrackRepository trackRepository
+		@Autowired
+		TrackRepository trackRepository
 
-        @Override
-        rx.Observable<Collection> handle(DiscoverTracksCommand command) {
-            def pageRequest = new PageRequest(command.page, command.size)
-            def tracks = trackRepository.list(pageRequest)
+		@Override
+		rx.Observable<Collection> handle(DiscoverTracksCommand command) {
+			def pageRequest = new PageRequest(command.page, command.size)
+			def tracks = trackRepository.list(pageRequest)
 
-            if (!tracks.hasContent()) {
-                return error(new TrackDiscoveryException())
-            }
+			if (!tracks.hasContent()) {
+				return error(new TrackDiscoveryException())
+			}
 
-            def response = tracks.content.stream().map({ track ->
-                [
-                        "title"      : track.title,
-                        "description": track.description
-                ]
-            }).collect()
+			def response = tracks.content.stream().map({ track ->
+				[
+						"code"       : track.code,
+						"title"      : track.title,
+						"description": track.description
+				]
+			}).collect()
 
 
 
-            just(response)
-        }
-    }
+			just(response)
+		}
+	}
 
 }
