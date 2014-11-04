@@ -7,6 +7,7 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.servlet.DispatcherServlet
 
 import static java.lang.System.getProperty
+import static javax.servlet.DispatcherType.REQUEST
 
 def port = getProperty("port", "8080")
 def server = new Server(port as int)
@@ -16,16 +17,18 @@ server.join()
 
 
 def servletContextHandler() {
-    def applicationContext = new AnnotationConfigWebApplicationContext()
-    applicationContext.register(BootstrapConfiguration)
+	def applicationContext = new AnnotationConfigWebApplicationContext()
+	applicationContext.register(BootstrapConfiguration)
 
-    def dispatcherServlet = new DispatcherServlet(applicationContext)
-    def servletHolder = new ServletHolder(dispatcherServlet)
-    def context = new ServletContextHandler()
+	def dispatcherServlet = new DispatcherServlet(applicationContext)
+	def servletHolder = new ServletHolder(dispatcherServlet)
+	def context = new ServletContextHandler()
 
-    context.contextPath = "/"
-    context.addServlet servletHolder, "/*"
-    context
+
+	context.addFilter CORSFilter, "/*", EnumSet.of(REQUEST)
+	context.contextPath = "/"
+	context.addServlet servletHolder, "/*"
+	context
 }
 
 
