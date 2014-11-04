@@ -48,24 +48,25 @@ class SubmitAnswerCommand implements Command<Map> {
                 ])
             }
 
-            if (decksUntilNextLevel > 0) {
-                return just([
-                        "deck"     : command.deckNo + 1,
-                        "deck.next": true
-                ])
-            }
-
             if (decksUntilNextLevel == 0 && hasMoreDecks) {
                 return just([
                         "deck"      : command.deckNo + 1,
+                        "deck.next" : true,
+                        "level.next": true,
+                ])
+            }
+
+
+            if (decksUntilNextLevel > 0) {
+                return just([
+                        "deck"     : command.deckNo + 1,
                         "deck.next": true,
-                        "level.next": true
                 ])
             }
 
             // sorry, no more decks.
             just([
-                    "level.done": true
+                    "track.done": true
             ])
 
         }
