@@ -22,13 +22,19 @@ class TakeChallengeCommand implements Command<Map> {
         @Autowired
         TrackRepository trackRepository
 
+        @Autowired
+        OngoingChallengeRepository challengeRepository
+
         @Override
         rx.Observable<Map> handle(TakeChallengeCommand command) {
             def track = trackRepository.findByCode(command.trackCode)
             def deck = track.decks[command.deckNo]
             def question = deck.questions.first()
 
+            def ongoingChallengeId = challengeRepository.newChallenge(deck)
+
             just([
+                    "track"                    : command.trackCode,
                     "track.decksUntilNextLevel": track.decksUntilNextLevel(command.deckNo),
                     "deck"                     : command.deckNo,
                     "deck.title"               : deck.title,
@@ -36,7 +42,8 @@ class TakeChallengeCommand implements Command<Map> {
                     "deck.size"                : deck.size(),
                     "question"                 : 0,
                     "question.title"           : question.title,
-                    "question.answerOptions"   : question.answerOptions.collect { ["text": it.text] }
+                    "question.answerOptions"   : question.answerOptions.collect { ["text": it.text] },
+                    "challenge.id"             : ongoingChallengeId
             ])
         }
     }

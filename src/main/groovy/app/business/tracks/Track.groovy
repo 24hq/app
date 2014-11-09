@@ -22,6 +22,14 @@ class Track {
         (lastDeckWithAtTheSameLevel - currentDeckNo)
     }
 
+    void setDecks(Collection<QuestionDeck> decks) {
+        decks.eachWithIndex { deck, i ->
+            deck.no = i
+            deck.trackCode = code
+        }
+        this.decks = decks
+    }
+
     int size() {
         decks.size()
     }

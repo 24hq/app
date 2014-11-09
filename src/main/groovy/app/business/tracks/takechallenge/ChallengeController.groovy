@@ -26,33 +26,36 @@ class ChallengeController {
         def response = commandBus.execute command
 
         def links = []
-        def responseWithLinks = response.map(addLinksIfAny(links, track) as Func1)
+        def responseWithLinks = response.map(addLinksIfAny(links) as Func1)
 
         deferred(responseWithLinks)
     }
 
-    @RequestMapping(value = "/answers/{track}/{deck}/{question}/{answer}", method = RequestMethod.POST)
+
+    @RequestMapping(value = "/answers/{challenge}/{track}/{deck}/{question}/{answerOption}", method = RequestMethod.POST)
     DeferredResult<Map> submitAnswer(
+            @PathVariable String challenge,
             @PathVariable String track,
             @PathVariable int deck,
             @PathVariable int question,
-            @PathVariable int answer) {
+            @PathVariable int answerOption) {
 
-        def command = new SubmitAnswerCommand(trackCode: track, deckNo: deck, questionNo: question, answerNo: answer)
+        def command = new SubmitAnswerCommand(challengeId: challenge, trackCode: track, deckNo: deck, questionNo: question, answerOptionNo: answerOption)
         def response = commandBus.execute command
 
         def links = []
-        def responseWithLinks = response.map(addLinksIfAny(links, track) as Func1)
+        def responseWithLinks = response.map(addLinksIfAny(links) as Func1)
 
         deferred(responseWithLinks)
     }
 
-    private Closure<Map> addLinksIfAny(links, track) {
+    private Closure<Map> addLinksIfAny(links) {
         { map ->
             map.'question.answerOptions'.eachWithIndex { _, answerNo ->
                 links << linkTo(ChallengeController)
                         .slash('answers')
-                        .slash(track)
+                        .slash(map.'challenge.id')
+                        .slash(map.track)
                         .slash(map.deck)
                         .slash(map.question)
                         .slash(answerNo)
@@ -61,9 +64,9 @@ class ChallengeController {
 
             if (map.'deck.next') {
                 links << linkTo(ChallengeController)
-                        .slash(track)
+                        .slash(map.track)
                         .slash(map.deck)
-                        .withRel("take-deck")
+                        .withRel("take-challenge")
             }
             map += [links: links]
             map

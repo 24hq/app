@@ -28,6 +28,7 @@ test {
 }
 
 dependencies {
+    compile 'redis.clients:jedis:2.6.0'
     compile 'org.eclipse.jetty:jetty-server:9.2.3.v20140905'
     compile 'org.eclipse.jetty:jetty-servlet:9.2.3.v20140905'
 
