@@ -1,6 +1,6 @@
 package app.business.tracks.takechallenge
 
-import app.business.tracks.QuestionDeck
+import app.business.tracks.SubmittedAnswer
 import app.business.tracks.TrackRepository
 import app.infrastructure.Command
 import app.infrastructure.CommandHandler
@@ -25,10 +25,16 @@ class SubmitAnswerCommand implements Command<Map> {
     static class Handler implements CommandHandler<Map, SubmitAnswerCommand> {
 
         @Autowired
-        TrackRepository trackRepository
+        private final TrackRepository trackRepository
 
         @Autowired
-        OngoingChallengeRepository ongoingChallengeRepository
+        private final OngoingChallengeRepository ongoingChallengeRepository
+
+        @Autowired
+        Handler(OngoingChallengeRepository ongoingChallengeRepository, TrackRepository trackRepository) {
+            this.trackRepository = trackRepository
+            this.ongoingChallengeRepository = ongoingChallengeRepository
+        }
 
         @Override
         rx.Observable<Map> handle(SubmitAnswerCommand command) {
@@ -36,7 +42,8 @@ class SubmitAnswerCommand implements Command<Map> {
             def track = trackRepository.findByCode(command.trackCode)
             def deck = track.decks[command.deckNo]
 
-            def numberOfAnswers = ongoingChallengeRepository.submitAnswer command.challengeId, command.answerOptionNo
+            def submittedAnswer = new SubmittedAnswer(command.answerOptionNo)
+            def numberOfAnswers = ongoingChallengeRepository.submitAnswer command.challengeId, submittedAnswer
             if (numberOfAnswers > deck.size()) {
                 throw new NoMoreQuestionsToAnswerException()
             }
@@ -67,7 +74,6 @@ class SubmitAnswerCommand implements Command<Map> {
                         "track"     : track.code,
                         "deck"      : deck.no + 1,
                         "deck.next" : true,
-
                         "level.next": true,
                 ])
             }
@@ -82,21 +88,13 @@ class SubmitAnswerCommand implements Command<Map> {
             }
 
             // sorry, no more decks.
-            def answers = ongoingChallengeRepository.answers(command.challengeId)
+            def submittedAnswers = ongoingChallengeRepository.submittedAnswers(command.challengeId)
             just([
-                    "deck.successRate": calculateSuccessRate(answers, deck),
+
+                    "deck.successRate": deck.calculateSuccessRateForGiven(submittedAnswers),
                     "track.done"      : true
             ])
 
-        }
-
-        private int calculateSuccessRate(List<Long> answers, QuestionDeck deck) {
-            def numberOfCorrectAnswers = deck.questions.collect { question ->
-                def correctOptionNo = question.correctAnswerOption().no
-                correctOptionNo == answers[question.no]
-            }.size()
-
-            (numberOfCorrectAnswers / deck.size()) * 100
         }
 
     }

@@ -21,4 +21,12 @@ class QuestionDeck {
         }
         this.questions = questions
     }
+
+    int calculateSuccessRateForGiven(Collection<SubmittedAnswer> submittedAnswers) {
+        def numberOfCorrectAnswers = questions.count { question ->
+            question.isCorrect(submittedAnswers[question.no])
+        }
+
+        (numberOfCorrectAnswers / questions.size()) * 100
+    }
 }

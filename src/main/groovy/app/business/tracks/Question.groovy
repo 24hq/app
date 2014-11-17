@@ -20,8 +20,8 @@ class Question {
         this.answerOptions = answerOptions
     }
 
-    AnswerOptions correctAnswerOption() {
-        answerOptions.find { it.correct }
+    boolean isCorrect(SubmittedAnswer answerOptionNo) {
+        answerOptions.find { it.correct }.no == answerOptionNo.optionNo
     }
 
 
