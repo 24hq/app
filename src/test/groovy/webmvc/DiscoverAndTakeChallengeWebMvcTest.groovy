@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.test.context.web.WebAppConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.MvcResult
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.web.context.WebApplicationContext
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
@@ -39,9 +40,13 @@ class DiscoverAndTakeChallengeWebMvcTest {
 
     @Test
     void "discover tracks and take challenge"() {
-        def cleanCodeChallengeLink = discoverCleanCodeChallengeLink()
-        String firstOptionLink = takeChallenge(cleanCodeChallengeLink)
-        respondToQuestion(firstOptionLink)
+        def aLink = discoverCleanCodeChallengeLink()
+
+        6.times {
+            aLink = followLinkAndRespondToQuestion(aLink)
+        }
+
+        respondToLastQuestion(aLink)
     }
 
     String discoverCleanCodeChallengeLink() {
@@ -60,21 +65,22 @@ class DiscoverAndTakeChallengeWebMvcTest {
         "http://localhost/challenges/CLNCDE/0"
     }
 
-    private String takeChallenge(String takeChallengeLink) {
-        MvcResult takeChallengeResponse = asyncRequest(takeChallengeLink)
-        String respondWithFirstOptionLink = mockMvc.perform(asyncDispatch(takeChallengeResponse))
+    private String followLinkAndRespondToQuestion(String takeChallengeLink) {
+        MvcResult mvcResult = asyncRequest(takeChallengeLink)
+        String respondWithFirstOptionLink = mockMvc.perform(asyncDispatch(mvcResult))
                 .andExpect(jsonPath('.links[0].rel').value("respond"))
-                .andExpect(jsonPath('.links[0].href').value(matchesRegex("http://localhost/challenges/answers/.+/CLNCDE/0/0/0")))
+                .andExpect(jsonPath('.links[0].href').value(matchesRegex("http://localhost/challenges/answers/.+/CLNCDE/0/\\d+/0")))
                 .andReturn().json().read(".links[0].href")
         respondWithFirstOptionLink
     }
 
-    private String respondToQuestion(String respondWithFirstOptionLink) {
-        MvcResult respondWithFirstOptionResponse = asyncRequest(respondWithFirstOptionLink)
-        mockMvc.perform(asyncDispatch(respondWithFirstOptionResponse))
-                .andExpect(jsonPath('.links[0].rel').value("respond"))
-                .andExpect(jsonPath('.links[0].href').value(matchesRegex("http://localhost/challenges/answers/.+/CLNCDE/0/1/0")))
-                .andReturn().json().read(".links[0].href")
+    private def respondToLastQuestion(String respondLink) {
+        MvcResult mvcResult = asyncRequest(respondLink)
+        mockMvc.perform(asyncDispatch(mvcResult))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath('$.[deck.passRate]').value(80))
+                .andExpect(jsonPath('$.[deck.successRate]').exists())
+                .andExpect(jsonPath('$.[deck.accomplishmentMessage]').exists())
     }
 
     private MvcResult asyncRequest(String cleanCodeChallengeLink) {

@@ -3,18 +3,21 @@ package app
 import org.springframework.web.filter.OncePerRequestFilter
 
 import javax.servlet.FilterChain
-import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-public class CORSFilter extends OncePerRequestFilter {
+class CORSFilter extends OncePerRequestFilter {
 
-	@Override
-	void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-		response.setHeader "Access-Control-Allow-Origin", "*"
-		response.setHeader "Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE"
-		response.setHeader "Access-Control-Max-Age", "3600"
-		response.setHeader "Access-Control-Allow-Headers", "x-requested-with"
-		filterChain.doFilter request, response
-	}
+    @Override
+    void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
+
+        def header = response.&setHeader
+
+        header "Access-Control-Allow-Origin", "*"
+        header "Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE"
+        header "Access-Control-Max-Age", "3600"
+        header "Access-Control-Allow-Headers", "x-requested-with"
+
+        filterChain.doFilter request, response
+    }
 }

@@ -2,6 +2,8 @@ package app.business.tracks
 
 class QuestionDeck {
 
+    String onSuccess
+    String onFailure
     String title
     String trackCode
     int no

@@ -24,6 +24,8 @@ class SubmitAnswerCommand implements Command<Map> {
     @Component
     static class Handler implements CommandHandler<Map, SubmitAnswerCommand> {
 
+        final def PASS_RATE = 80
+
         @Autowired
         private final TrackRepository trackRepository
 
@@ -89,10 +91,14 @@ class SubmitAnswerCommand implements Command<Map> {
 
             // sorry, no more decks.
             def submittedAnswers = ongoingChallengeRepository.submittedAnswers(command.challengeId)
+            def successRate = deck.calculateSuccessRateForGiven(submittedAnswers)
+            def accomplishmentMessage = successRate < PASS_RATE ? deck.onFailure : deck.onSuccess
             just([
 
-                    "deck.successRate": deck.calculateSuccessRateForGiven(submittedAnswers),
-                    "track.done"      : true
+                    "deck.accomplishmentMessage": accomplishmentMessage,
+                    "deck.passRate"             : PASS_RATE,
+                    "deck.successRate"          : successRate,
+                    "track.done"                : true
             ])
 
         }

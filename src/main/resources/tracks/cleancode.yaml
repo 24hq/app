@@ -8,6 +8,8 @@ description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiu
 
 decks:
   - title: Coding
+    onSuccess: Molodchina, teperj ti - Kapitan Amerika!
+    onFailure: Trendec tebe, drug! Pochitaj Ankla Boba!
     level: 1
     questions:
       - title: What is Clean Code?
