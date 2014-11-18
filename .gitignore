@@ -1,4 +1,5 @@
 *.class
+*.rdb
 
 # Package Files #
 *.war

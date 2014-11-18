@@ -22,6 +22,9 @@ ext {
 repositories {
     mavenCentral()
     mavenLocal()
+    maven {
+        url 'http://clojars.org/repo'
+    }
 }
 
 test {
@@ -69,6 +72,7 @@ dependencies {
     testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
     testCompile 'org.spockframework:spock-spring:0.7-groovy-2.0'
     testCompile 'org.hamcrest:hamcrest-all:1.3'
+    testCompile 'redis.embedded:embedded-redis:0.3'
 }
 
 jar {

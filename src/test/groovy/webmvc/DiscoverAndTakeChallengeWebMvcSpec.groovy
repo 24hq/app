@@ -2,6 +2,7 @@ package webmvc
 
 import app.BootstrapConfiguration
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -13,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.MvcResult
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.web.context.WebApplicationContext
+import spock.lang.Specification
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
@@ -20,26 +22,27 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup
 import static webmvc.RegexMatcher.matchesRegex
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = [BootstrapConfiguration])
 @WebAppConfiguration
-class DiscoverAndTakeChallengeWebMvcTest {
+class DiscoverAndTakeChallengeWebMvcSpec extends Specification {
+
+    @Rule
+    EmbeddedRedis redis
 
     MockMvc mockMvc
 
     @Autowired
     private WebApplicationContext context
 
-    @Before
-    void setup() {
+    def setup() {
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.setRemoteAddr("127.0.0.1");
 
         mockMvc = webAppContextSetup(context).build()
     }
 
-    @Test
-    void "discover tracks and take challenge"() {
+    def  "discover tracks and take challenge"() {
+        expect:
         def aLink = discoverCleanCodeChallengeLink()
 
         6.times {
