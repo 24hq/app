@@ -1,0 +1,3 @@
+moduleName = mvcresult-module
+moduleVersion = 1.0
+extensionClasses = groovy.extensions.MvcResultExtension
