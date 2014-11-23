@@ -1,0 +1,165 @@
+# DevOps
+# Multi-level
+# Multi-deck
+
+code: DEVOPS
+title: Are you a DevOps Guy?
+description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+decks:
+  - title: Coding
+    level: 1
+    onSuccess: Molodchina, davaj-ka na sledujushij Deck!
+    onFailure: Trendec tebe, drug! Pochitaj chego!
+    questions:
+      - title: What is Puppet?
+        answerOptions:
+          - text: Bullshit
+            correct: false
+          - text: Great stuff
+            correct: true
+          - text: I don't care
+            correct: false
+      - title: What nationality is Enrique Eglesias?
+        answerOptions:
+          - text: American
+            correct: false
+          - text: Latvian
+            correct: true
+          - text: Armenian
+            correct: false
+      - title: What nationality is Antonio Banderas?
+        answerOptions:
+          - text: American
+            correct: false
+          - text: Latvian
+            correct: true
+          - text: Armenian
+            correct: false
+
+  - title: Disciplines
+    level: 1
+    onSuccess: Molodchina, eshe odin deck i level up!
+    onFailure: Trendec tebe, drug!
+    questions:
+      - title: Should you care as a DevOps guy?
+        answerOptions:
+          - text: No
+            correct: false
+          - text: Yes
+            correct: true
+          - text: Maybe
+            correct: false
+      - title: Should you really care as a DevOps guy?
+        answerOptions:
+          - text: No
+            correct: false
+          - text: Yes
+            correct: true
+          - text: Maybe
+            correct: false
+      - title: Really?
+        answerOptions:
+          - text: No
+            correct: false
+          - text: Yes
+            correct: true
+          - text: Maybe
+            correct: false
+
+
+  - title: Philosophy
+    level: 2
+    onSuccess: Molodchina, davaj-ka na eshe na odin deck!
+    onFailure: Trendec tebe, drug!
+    questions:
+      - title: 1 Should you care as a DevOps guy?
+        answerOptions:
+          - text: No
+            correct: false
+          - text: Yes
+            correct: true
+          - text: Maybe
+            correct: false
+      - title: 2 Should you care as a DevOps guy?
+        answerOptions:
+          - text: No
+            correct: false
+          - text: Yes
+            correct: true
+          - text: Maybe
+            correct: false
+      - title: 3 Should you care as a DevOps guy?
+        answerOptions:
+          - text: No
+            correct: false
+          - text: Yes
+            correct: true
+          - text: Maybe
+            correct: false
+
+  - title: Philosophy 2
+    level: 2
+    onSuccess: Molodchina, davaj-ka na eshe na odin deck i potom level up!
+    onFailure: Trendec tebe, drug!
+    questions:
+      - title: 141 Should you care as a DevOps guy?
+        answerOptions:
+          - text: No
+            correct: false
+          - text: Yes
+            correct: true
+          - text: Maybe
+            correct: false
+      - title: 141423 Should you care as a DevOps guy?
+        answerOptions:
+          - text: No
+            correct: false
+          - text: Yes
+            correct: true
+          - text: Maybe
+            correct: false
+      - title: 353453 Should you care as a DevOps guy?
+        answerOptions:
+          - text: No
+            correct: false
+          - text: Yes
+            correct: true
+          - text: Maybe
+            correct: false
+
+
+  - title: HardCode
+    level: 3
+    onSuccess: Molodchina, vsju trassu proshel!
+    onFailure: Hana, produl pod samij konec
+    questions:
+      - title: HARD STUFF!
+        answerOptions:
+          - text: No
+            correct: false
+          - text: Yes
+            correct: true
+          - text: Maybe
+            correct: false
+      - title: VERY HARD!
+        answerOptions:
+          - text: No
+            correct: false
+          - text: Yes
+            correct: true
+          - text: Maybe
+            correct: false
+      - title: OOAODAODOA!!!
+        answerOptions:
+          - text: No
+            correct: false
+          - text: Yes
+            correct: true
+          - text: Maybe
+            correct: false
+
+
+
+
+

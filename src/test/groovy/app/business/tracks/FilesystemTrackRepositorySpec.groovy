@@ -7,7 +7,7 @@ class FilesystemTrackRepositorySpec extends Specification {
 
     def "fails with exception during warm-up if track contains decks that are not ordered ascending by level"() {
         given:
-        def repository = new FilesystemTrackRepository(new ClassPathResource('tracks'))
+        def repository = new FilesystemTrackRepository(new ClassPathResource('tracks-broken'))
 
         when:
         repository.warmUp()

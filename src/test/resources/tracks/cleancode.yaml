@@ -1,0 +1,68 @@
+# Clean Code
+# Single-level
+# Single-deck
+
+code: CLNCDE
+title: Are you a Clean Coder?
+description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+decks:
+  - title: Coding
+    onSuccess: Molodchina, teperj ti - Kapitan Amerika!
+    onFailure: Trendec tebe, drug! Pochitaj Ankla Boba!
+    level: 1
+    questions:
+      - title: What is Clean Code?
+        answerOptions:
+          - text: Bullshit
+            correct: false
+          - text: Great stuff
+            correct: true
+          - text: I don't care
+            correct: false
+      - title: What nationality is Uncle Bob?
+        answerOptions:
+          - text: American
+            correct: false
+          - text: Latvian
+            correct: true
+          - text: Armenian
+            correct: false
+      - title: Should you care as a clean coder?
+        answerOptions:
+          - text: No
+            correct: false
+          - text: Yes
+            correct: true
+          - text: Maybe
+            correct: false
+      - title: 1 Should you care as a clean coder?
+        answerOptions:
+          - text: No
+            correct: false
+          - text: Yes
+            correct: true
+          - text: Maybe
+            correct: false
+      - title: 2 Should you care as a clean coder?
+        answerOptions:
+          - text: No
+            correct: false
+          - text: Yes
+            correct: true
+          - text: Maybe
+            correct: false
+      - title: 3 Should you care as a clean coder?
+        answerOptions:
+          - text: No
+            correct: false
+          - text: Yes
+            correct: true
+          - text: Maybe
+            correct: false
+
+
+
+
+
+
