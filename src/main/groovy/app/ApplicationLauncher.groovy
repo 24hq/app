@@ -26,7 +26,7 @@ def servletContextHandler() {
 
 
 	context.addFilter CORSFilter, "/*", EnumSet.of(REQUEST)
-	context.contextPath = "/"
+	context.contextPath = "/api"
 	context.addServlet servletHolder, "/*"
 	context
 }
