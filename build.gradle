@@ -56,12 +56,13 @@ dependencies {
     compile "org.springframework:spring-context:$springVersion"
     compile "org.springframework:spring-webmvc:$springVersion"
     compile 'org.springframework.data:spring-data-redis:1.4.0.RELEASE'
+    compile 'org.springframework.data:spring-data-jdbc-core:1.1.0.RELEASE'
     compile 'org.springframework.data:spring-data-commons:1.9.0.RELEASE'
     compile 'org.springframework.hateoas:spring-hateoas:0.16.0.RELEASE'
 
 
     compile 'org.springframework.security:spring-security-web:3.2.5.RELEASE'
-
+    compile 'org.apache.commons:commons-dbcp2:2.0.1'
 
     runtime 'org.postgresql:postgresql:9.3-1102-jdbc41'
     runtime 'org.slf4j:slf4j-api:1.7.7'
