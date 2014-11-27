@@ -1,0 +1,12 @@
+pgsql:
+  image: postgres:9.3.5
+  ports:
+    - "5432:5432"
+  environment:
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: postgres
+
+redis:
+  image: redis:2.8.17
+  ports:
+    - "6379:6379"
