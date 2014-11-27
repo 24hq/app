@@ -16,9 +16,9 @@ class PostgresConfiguration {
 
     @Bean(destroyMethod = "close")
     DataSource dataSource(
-            @Value('${jdbc.url:jdbc:postgresql://localhost:5432/learnerd}') String url,
-            @Value('${jdbc.username:postgres') String username,
-            @Value('${jdbc.password:postgres') String password) {
+            @Value('${jdbc.url:jdbc:postgresql://localhost:5432/postgres}') String url,
+            @Value('${jdbc.username:postgres}') String username,
+            @Value('${jdbc.password:postgres}') String password) {
 
         def dataSource = new BasicDataSource()
         dataSource.driverClassName = "org.postgresql.Driver"

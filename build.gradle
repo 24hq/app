@@ -46,6 +46,9 @@ dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.3.7'
     compile 'org.yaml:snakeyaml:1.14'
     compile 'org.mindrot:jbcrypt:0.3m'
+    compile "org.flywaydb:flyway-core:3.1"
+
+
 
 
     compile 'com.google.guava:guava:18.0'
