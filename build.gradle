@@ -64,6 +64,8 @@ dependencies {
     compile 'org.springframework.hateoas:spring-hateoas:0.16.0.RELEASE'
     compile 'org.springframework.social:spring-social-facebook:1.1.1.RELEASE'
     compile 'org.springframework.social:spring-social-google:1.0.0.RELEASE'
+    compile 'org.springframework.social:spring-social-security:1.1.0.RELEASE'
+
 
     // Excerpt from Spring Data documentation:
     // Even thought HttpComponents is an optional dependency, we strongly recommend it over the fallback option.
