@@ -1,6 +1,7 @@
 package app
 
 import org.eclipse.jetty.server.Server
+import org.eclipse.jetty.server.session.SessionHandler
 import org.eclipse.jetty.servlet.ServletContextHandler
 import org.eclipse.jetty.servlet.ServletHolder
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext
@@ -27,6 +28,7 @@ def servletContextHandler() {
 
 	context.addFilter CORSFilter, "/*", EnumSet.of(REQUEST)
 	context.contextPath = "/api"
+	context.sessionHandler = new SessionHandler()
 	context.addServlet servletHolder, "/*"
 	context
 }
